@@ -1,6 +1,6 @@
 'use client'; // Add this line
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@mui/material";
 
@@ -9,7 +9,6 @@ const emojis = ["😀", "😂", "😍", "😎", "🤩", "🥳", "😜", "🤔", 
 export default function EmojiDisplay() {
   const [emojiList, setEmojiList] = useState<string[]>([]);
   const [clickDisabled, setClickDisabled] = useState(false);
-  const [showSecondEmoji, setShowSecondEmoji] = useState(false);
 
   const addEmoji = () => {
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
@@ -39,16 +38,9 @@ export default function EmojiDisplay() {
 
     setTimeout(() => {
       addEmoji();
-      setShowSecondEmoji(true);
       setClickDisabled(false); // Libera o clique após a exibição dos emojis
     }, 3000);
   };
-
-  useEffect(() => {
-    if (emojiList.length === 2) {
-      setShowSecondEmoji(true);
-    }
-  }, [emojiList]);
 
   return (
     <div className="container">
