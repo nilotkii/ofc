@@ -5,21 +5,21 @@ import { motion } from "framer-motion";
 import { Button } from "@mui/material";
 
 const emojis = [
-  "😀", "😂", "😍", "😎", "🤩", "🥳", "😜", "🤔", "🤯", "😴",
-  "😊", "😇", "😉", "😌", "😍", "😘", "😗", "😋",
-  "😜", "🤪", "🤨", "🧐", "🤓", "😏", "😒", "🙄", "😬", "😮",
-  "😱", "😭", "😤", "😡", "😠", "🤬", "🥶", "🥵", "😷", "🤒",
-  "🤕", "🤢", "🤮", "🤧", "😇", "🥺", "🤥", "🤫", "🤭", "🫣",
-  "🫡", "🥱", "🫠", "😵", "🥴", "🤠", "👽", "💀", "☠️", "👻",
-  "👹", "👺", "🤖", "🎃", "😻", "😽", "🙀", "😿", "😾", "👐",
-  "🙌", "👏", "🤝", "👍", "👎", "👊", "✊", "🤛", "🤜", "🤞",
-  "🌍", "🌎", "🌏", "🌞", "🌝", "🌚", "🌜", "🌛", "⭐", "✨",
-  "🔥", "💧", "🌊", "🪵", "🍃", "🌱", "🌿", "🌳", "🌴", "🌵",
-  "🌻", "🌼", "🌷", "🌹", "🌸", "🏵️", "🍂", "🍁", "⛰️", "🏔️",
-  "🗻", "🏝️", "🏜️", "🏞️", "🕌", "⛪", "🛕", "🕍", "🕉️", "☸️",
-  "✡️", "☯️", "☦️", "✝️", "🕊️", "☪️","🇧🇷","👼",
-  "🚓", "🚔", "🚑", "🚒", "🛒", "🏦", "🏛️", "⚖️", "💰", "💵",
-  "📚", "🏫", "🩺", "⚕️", "✈️", "🚆", "🚌", "🏠", "🗽", "☮️"
+  "👽",
+  "👹",
+  "🏝️", "🏜️", "🏞️", "🕌", "⛪", "🛕", "🕉️",
+  "✡️", "☯️", "☦️", "✝️", "🕊️", "☪️", "🇧🇷", "👼",
+  "🚓", "🛒", "🏦", "🏛️", "⚖️", "💰", "💵",
+  "🏫", "🩺", "🗽", "☮️",
+  "🤔", "🧐", "🤯", "😵", "🫨", "💭", "💡", "⚖️", "♾️", "🔮",
+  "🌎", "🌍", "🌏", "🌓", "🌗", "🌕", "🌑", "🌒", "🌘", "🌠",
+  "🔥", "💧", "🌪️", "🌬️", "🌊", "⚡", "☄️", "⌛",
+  "⏰", "⏮️", "⏭️", "♻️", "📜", "📖", "📚",
+  "🔗", "🧬", "🕳️", "⚰️", "🗿", "🕯️", "🏺", "🔑",
+  "🗝️", "💀", "☠️", "👁️", "🫥", "🔓", "🔒", "🚪", "🛤️",
+  "🕊️", "🎭", "🏹", "🏛️", "⚔️", "🛡️", "🩸", "🩹", "⚖️",
+  "🔉", "🔇", "🛑", "🔀", "🔂", "🔃", "🔄", "🏳️", "🧩",
+  "🃏", "🧠", "🫀", "💓", "💥"
 ];
 
 export default function EmojiDisplay() {
@@ -59,12 +59,8 @@ export default function EmojiDisplay() {
   };
 
   return (
-    <div className="container">
-      <div className="flex flex-col items-center justify-center min-h-screen w-full space-y-4">
-        <Button onClick={handleClick} disabled={clickDisabled} className="px-4 py-2 text-xl rounded-lg shadow-lg">
-          Adicionar Emoji
-        </Button>
-        <div className="flex flex-wrap justify-center gap-4 p-4">
+      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+        <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
           {emojiList.map((emoji, index) => (
             <motion.span
               key={index}
@@ -72,12 +68,16 @@ export default function EmojiDisplay() {
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
+              style={{ fontSize: '6rem' }} // Ajuste o tamanho conforme necessário
             >
               {emoji}
             </motion.span>
           ))}
-        </div>
+        </main>
+        <Button onClick={handleClick} disabled={clickDisabled} className="px-4 py-40 text-xl rounded-lg shadow-lg">
+          Adicionar Emoji
+        </Button>
       </div>
-    </div>
+
   );
 }
