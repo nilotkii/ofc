@@ -1,3 +1,9 @@
+'use client'; // Add this line
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@mui/material";
+
 const emojis = ["😀", "😂", "😍", "😎", "🤩", "🥳", "😜", "🤔", "🤯", "😴"];
 
 export default function EmojiDisplay() {
