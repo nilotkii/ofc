@@ -1,83 +1,79 @@
 'use client'; // Add this line
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState } from 'react';
 import { Button } from "@mui/material";
 
 const emojis = [
-  "👽",
-  "👹",
-  "🏝️", "🏜️", "🏞️", "🕌", "⛪", "🛕", "🕉️",
-  "✡️", "☯️", "☦️", "✝️", "🕊️", "☪️", "🇧🇷", "👼",
-  "🚓", "🛒", "🏦", "🏛️", "⚖️", "💰", "💵",
-  "🏫", "🩺", "🗽", "☮️",
+  "👽", "🤖", "🐄", "🐀", "🐖", "🍸", "🗣️", "👣", "🕸️",
+  "👹", "🗼", "🍾", "🏆", "🎵", "🖼️", "🎯", "🎱", "💊",
+  "🏝️", "🏜️", "🏞️", "🕌", "⛪", "🕉️", "🚽", "🔞", "☢️",
+  "✡️", "☯️", "✝️", "🕊️", "☪️", "👼", "🚫", "🏳️‍🌈",
+  "🚓", "🛒", "🏦", "⚖️", "💰", "💵",
+  "🩺", "🗽", "☮️",
   "🤔", "🧐", "🤯", "😵", "🫨", "💭", "💡", "⚖️", "♾️", "🔮",
-  "🌎", "🌍", "🌏", "🌓", "🌗", "🌕", "🌑", "🌒", "🌘", "🌠",
+  "🌎", "🌍", "🌏", "🌓", "🌗", "🌕",
   "🔥", "💧", "🌪️", "🌬️", "🌊", "⚡", "☄️", "⌛",
   "⏰", "⏮️", "⏭️", "♻️", "📜", "📖", "📚",
-  "🔗", "🧬", "🕳️", "⚰️", "🗿", "🕯️", "🏺", "🔑",
-  "🗝️", "💀", "☠️", "👁️", "🫥", "🔓", "🔒", "🚪", "🛤️",
-  "🕊️", "🎭", "🏹", "🏛️", "⚔️", "🛡️", "🩸", "🩹", "⚖️",
-  "🔉", "🔇", "🛑", "🔀", "🔂", "🔃", "🔄", "🏳️", "🧩",
-  "🃏", "🧠", "🫀", "💓", "💥"
+  "🔗", "🧬", "🕳️", "⚰️", "🗿", "🕯️", "🏺",
+  "🗝️", "💀", "☠️", "👁️", "🔓", "🔒", "🚪", "🛤️",
+  "🕊️", "🎭", "⚔️", "🛡️", "🩸", "🩹", "🪖",
+  "🔉", "🔇", "🛑", "🔀", "🔄", "🏳️", "🧩",
+  "🃏", "🧠", "🫀", "💥",
+  "♟️", 
+  "♀️", "♂️"
 ];
 
 export default function EmojiDisplay() {
+
   const [emojiList, setEmojiList] = useState<string[]>([]);
-  const [clickDisabled, setClickDisabled] = useState(false);
 
-  const addEmoji = () => {
-    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-
-    setEmojiList((prev) => {
-      if (prev.length < 2) {
-        return [...prev, randomEmoji];
-      } else {
-        return [randomEmoji];
-      }
-    });
-  };
-
-  const handleClick = () => {
-
-    setEmojiList([])
-
-    if (clickDisabled) {
-      return; // Impede cliques enquanto estiver desabilitado
-    }
-
-    setClickDisabled(true); // Trava o clique
-
-    setTimeout(() => {
-      addEmoji(); // Adiciona o primeiro emoji
-    }, 1000);
-
-    setTimeout(() => {
-      addEmoji();
-      setClickDisabled(false); // Libera o clique após a exibição dos emojis
-    }, 3000);
+  const rodarEmojis = () => {
+    const tempoTotal = 5000; // Tempo total por emoji
+    const intervaloInicial = 50; // Tempo inicial do intervalo
+    const aceleracao = 1.15; // Quanto diminui a cada iteração
+  
+    const sortearEmoji = (posicao : number) => {
+      let tempoDecorrido = 0;
+      let intervaloAtual = intervaloInicial;
+  
+      const executar = () => {
+        if (tempoDecorrido >= tempoTotal) return;
+  
+        const indiceAleatorio = Math.floor(Math.random() * emojis.length);
+  
+        setEmojiList((prevList) => {
+          const novaLista = [...prevList];
+          novaLista[posicao - 1] = emojis[indiceAleatorio]; // Atualiza a posição correta
+          return novaLista;
+        });
+  
+        tempoDecorrido += intervaloAtual;
+        intervaloAtual = intervaloAtual*aceleracao; // Garante que não fique muito rápido
+  
+        console.log(`Emoji ${posicao}: ${emojis[indiceAleatorio]} | Próximo intervalo: ${intervaloAtual}`);
+  
+        setTimeout(executar, intervaloAtual);
+      };
+  
+      executar();
+    };
+  
+    setEmojiList([]); // Reseta a lista antes de começar
+  
+    sortearEmoji(1); // Primeiro emoji
+    setTimeout(() => sortearEmoji(2), tempoTotal + 2000); // Segundo emoji começa após o primeiro
   };
 
   return (
-      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-        <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-          {emojiList.map((emoji, index) => (
-            <motion.span
-              key={index}
-              className="text-6xl"
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              style={{ fontSize: '6rem' }} // Ajuste o tamanho conforme necessário
-            >
-              {emoji}
-            </motion.span>
-          ))}
-        </main>
-        <Button onClick={handleClick} disabled={clickDisabled} className="px-4 py-40 text-xl rounded-lg shadow-lg">
-          Adicionar Emoji
-        </Button>
+    <div className="sorteio-container">
+      <div className="sorteio">
+        <div className="emoji">
+          {emojiList}
+        </div>
       </div>
-
+      <Button onClick={rodarEmojis}>
+        Lucky
+      </Button>
+    </div>
   );
 }
